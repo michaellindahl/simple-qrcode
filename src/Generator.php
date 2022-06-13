@@ -122,12 +122,27 @@ class Generator
      */
     protected $eyeColors = [];
 
-    /**
+   /**
      * The gradient to apply to the QrCode.
      *
      * @var Gradient
      */
     protected $gradient;
+
+    
+   /**
+     * The cutout width.
+     *
+     * @var int
+     */
+    protected $cutoutWidth = 0;
+
+    /**
+     * The cutout height.
+     *
+     * @var int
+     */
+    protected $cutoutHeight = 0;
 
     /**
      * Holds an image string that will be merged with the QrCode.
@@ -232,6 +247,20 @@ class Generator
     public function size(int $pixels): self
     {
         $this->pixels = $pixels;
+
+        return $this;
+    }
+   
+    /**
+     * Sets the size of the QrCode.
+     *
+     * @param int $pixels
+     * @return Generator
+     */
+    public function cutout(int $width, int $height): self
+    {
+        $this->cutoutWidth = $width;
+        $this->cutoutHeight = $height;
 
         return $this;
     }
@@ -450,7 +479,15 @@ class Generator
      */
     public function getRendererStyle(): RendererStyle
     {
-        return new RendererStyle($this->pixels, $this->margin, $this->getModule(), $this->getEye(), $this->getFill());
+        return new RendererStyle(
+            $this->pixels, 
+            $this->margin, 
+            $this->getModule(), 
+            $this->getEye(),
+            $this->getFill(),
+            $this->getCutoutWidth(),
+            $this->getCutoutHeight()            
+        );
     }
 
     /**
@@ -525,6 +562,26 @@ class Generator
         }
 
         return Fill::withForegroundColor($backgroundColor, $foregroundColor, $eye0, $eye1, $eye2);
+    }
+    
+    /**
+     * Fetches the cutout width.
+     *
+     * @return int
+     */
+    public function getCutoutWidth(): int
+    {
+        return $this->cutoutWidth;
+    }
+    
+    /**
+     * Fetches the cutout height.
+     *
+     * @return int
+     */
+    public function getCutoutHeight(): int
+    {
+        return $this->cutoutHeight; 
     }
 
     /**
