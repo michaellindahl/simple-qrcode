@@ -13,12 +13,18 @@
     "require": {
         "php": ">=7.2|^8.0",
       	"ext-gd": "*",
-        "bacon/bacon-qr-code": "^2.0"
+        "bacon/bacon-qr-code": "dev-cutout",
     },
     "require-dev": {
         "mockery/mockery": "~1",
         "phpunit/phpunit": "~9"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/mustanggb/BaconQrCode.git"
+        }
+    ],
     "suggest": {
         "ext-imagick": "Allows the generation of PNG QrCodes.",
         "illuminate/support": "Allows for use within Laravel."
